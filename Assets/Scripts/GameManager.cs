@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore() //Gives 100 points and displays it
     {
         Score += 100;
-        ScoreText.text = "Score: " + Score.ToString();
+        ScoreText.text = "Score:\n" + Score.ToString();
     }
 
     public void UpdateLives()
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         if (Lives > 1) //If lives are greater than the threshold, lose one, otherwise reset the game; displays it
         {
             Lives -= 1;
-            LivesText.text = "Lives: " + Lives.ToString();
+            LivesText.text = "Lives:\n" + Lives.ToString();
         }
         else
         {

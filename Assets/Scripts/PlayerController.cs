@@ -113,12 +113,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision) //Destroys Enemy when contacted and removes a life
     {
-        if (collision.gameObject.tag == "Enemy")
+        /*if (collision.gameObject.tag == "Enemy")
         {
             Destroy(collision.gameObject);
             GM.UpdateLives();
             AudioSource.PlayClipAtPoint(HurtSound, transform.position);
-        }
+        }*/
     }
 
     public void OnDestroy()

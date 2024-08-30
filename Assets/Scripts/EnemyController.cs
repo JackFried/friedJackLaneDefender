@@ -9,10 +9,12 @@ public class EnemyController : MonoBehaviour
     public int Health;
     public float Speed;
 
+    private GameManager gM;
+
     // Start is called before the first frame update
     void Start()
     {
-       
+        gM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -39,8 +41,15 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
+                gM.UpdateScore(); //Gives score through the GameManager
                 Destroy(gameObject);
             }
+        }
+
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Killzone")
+        {
+            gM.UpdateLives();
+            Destroy(gameObject);
         }
     }
 }
