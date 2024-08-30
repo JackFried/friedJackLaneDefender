@@ -9,18 +9,53 @@ public class EnemyController : MonoBehaviour
     public int Health;
     public float Speed;
 
+    public Animator Anim;
+
+    public float DamageTimeMax;
+    public float DeathTime;
+
+
+    private float startSpeed;
     private GameManager gM;
+    private float damageTime;
 
     // Start is called before the first frame update
     void Start()
     {
         gM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        startSpeed = Speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        //Time events
+        if (Anim.GetBool("Dead") == true)
+        {
+            Anim.SetBool("Moving", true);
+            Speed = 0;
+            if (DeathTime > 0)
+            {
+                DeathTime -= Time.deltaTime;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        } else
+        {
+            if (damageTime > 0)
+            {
+                Speed = 0;
+                Anim.SetBool("Moving", false);
+                damageTime -= Time.deltaTime;
+            }
+            else
+            {
+                Speed = startSpeed;
+                Anim.SetBool("Moving", true);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -29,20 +64,22 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    public void OnTriggerEnter2D(Collider2D collision) //Collisions with bullets decrease health, and when health would equal 0, the enemy is destroyed
+    public void OnTriggerEnter2D(Collider2D collision) //Collisions with bullets decrease health, and when health would equal 0, the enemy goes into death anim
     {
-        if (collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "Bullet") //Enemy is only affected by the bullet if they are not in i-frames
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);  Done in the bullet object
 
             if (Health > 1)
             {
                 Health -= 1;
+                //Anim.SetBool("Moving", false);
+                damageTime = DamageTimeMax;
             }
             else
             {
                 gM.UpdateScore(); //Gives score through the GameManager
-                Destroy(gameObject);
+                Anim.SetBool("Dead", true);
             }
         }
 

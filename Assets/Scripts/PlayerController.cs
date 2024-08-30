@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D Rb2d;
     public BulletController BC;
     public GameObject Bullet;
+    public GameObject BulletSpawn;
     public GameObject Enemy;
+    public GameObject ShootEffect;
     public GameManager GM;
     public float Speed;
     public float BulletSpeed;
@@ -103,12 +105,13 @@ public class PlayerController : MonoBehaviour
 
     private void FireBullet()
     {
-        //Creates a bullet at the player's location with the applied speed
+        //Creates a bullet and effect at the bullet spawn location with the applied speed
         BC.XSpeed = BulletSpeed;
-        Vector2 newPos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 newPos = new Vector2(BulletSpawn.transform.position.x, BulletSpawn.transform.position.y);
+        Instantiate(ShootEffect, newPos, Quaternion.identity);
         Instantiate(Bullet, newPos, Quaternion.identity);
 
-        AudioSource.PlayClipAtPoint(ShootSound, transform.position);
+        AudioSource.PlayClipAtPoint(ShootSound, BulletSpawn.transform.position);
     }
 
     public void OnCollisionEnter2D(Collision2D collision) //Destroys Enemy when contacted and removes a life

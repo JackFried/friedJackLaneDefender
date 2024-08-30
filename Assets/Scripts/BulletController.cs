@@ -6,6 +6,7 @@ public class BulletController : MonoBehaviour
 {
     public float XSpeed;
     public Rigidbody2D Rb2d;
+    public GameObject HitEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,13 @@ public class BulletController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Collider")
         {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Vector2 newPos = new Vector2(transform.position.x, transform.position.y);
+            Instantiate(HitEffect, newPos, Quaternion.identity);
             Destroy(gameObject);
         }
     }

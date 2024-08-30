@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XSpeed: 15
   Rb2d: {fileID: 5060733770956970237}
+  HitEffect: {fileID: 7844593143493082748, guid: 25c0da93874f3e74e928d251a9a50953, type: 3}
 --- !u!50 &5060733770956970237
 Rigidbody2D:
   serializedVersion: 4

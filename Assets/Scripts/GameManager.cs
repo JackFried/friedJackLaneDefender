@@ -49,14 +49,14 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLives()
     {
-        if (Lives > 1) //If lives are greater than the threshold, lose one, otherwise reset the game; displays it
+        if (Lives == 1) //If lives equal 0 (has to be 1 because that's the final hit), reset the game. Otherwise, lose a life; displays it
         {
-            Lives -= 1;
-            LivesText.text = "Lives:\n" + Lives.ToString();
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
         else
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            Lives -= 1;
+            LivesText.text = "Lives:\n" + Lives.ToString();
         }
     }
 
