@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: f0b26c1258cace24e82ecf76c7b79df5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -172,12 +172,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e285cc151223812459029e5a33beed88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Bc2d: {fileID: 8540663132552417971}
   Rb2d: {fileID: 2029464796588861606}
   Health: 1
   Speed: 5
   Anim: {fileID: 5627200788895860721}
   DamageTimeMax: 0.25
   DeathTime: 0.25
+  LifeLostSound: {fileID: 8300000, guid: 1efa6b8ba5f03a34cb906f36eb99fadc, type: 3}
+  HitSound: {fileID: 8300000, guid: 110cdbb28516cf44dab04eac3c30612c, type: 3}
+  DeathSound: {fileID: 8300000, guid: a9a2598f89ada684d8febd295c05add5, type: 3}
 --- !u!95 &5627200788895860721
 Animator:
   serializedVersion: 5

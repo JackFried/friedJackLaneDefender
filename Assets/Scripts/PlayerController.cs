@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
     public float BulletSpeed;
     public float TimerMax;
     public AudioClip ShootSound;
-    public AudioClip HurtSound;
-    public AudioClip PointSound;
 
     private float timer;
     private InputAction moveY;
@@ -51,20 +49,20 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void Shoot_started(InputAction.CallbackContext obj) //Determines if the ship should be shooting
+    private void Shoot_started(InputAction.CallbackContext obj) //Determines if the player should be shooting
     {
         shooting = true;
     }
-    private void Shoot_canceled(InputAction.CallbackContext obj) //Determines if the ship should not be shooting
+    private void Shoot_canceled(InputAction.CallbackContext obj) //Determines if the player should not be shooting
     {
         shooting = false;
     }
 
-    private void MoveY_started(InputAction.CallbackContext obj) //Determines if the ship should be moving along the Y axis
+    private void MoveY_started(InputAction.CallbackContext obj) //Determines if the player should be moving
     {
         movingY = true;
     }
-    private void MoveY_canceled(InputAction.CallbackContext obj) //Determines if the ship should not be moving along the Y axis
+    private void MoveY_canceled(InputAction.CallbackContext obj) //Determines if the player should not be moving
     {
         movingY = false;
     }
@@ -112,16 +110,6 @@ public class PlayerController : MonoBehaviour
         Instantiate(Bullet, newPos, Quaternion.identity);
 
         AudioSource.PlayClipAtPoint(ShootSound, BulletSpawn.transform.position);
-    }
-
-    public void OnCollisionEnter2D(Collision2D collision) //Destroys Enemy when contacted and removes a life
-    {
-        /*if (collision.gameObject.tag == "Enemy")
-        {
-            Destroy(collision.gameObject);
-            GM.UpdateLives();
-            AudioSource.PlayClipAtPoint(HurtSound, transform.position);
-        }*/
     }
 
     public void OnDestroy()

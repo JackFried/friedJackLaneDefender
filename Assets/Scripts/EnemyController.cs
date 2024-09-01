@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class EnemyController : MonoBehaviour
 {
+    public BoxCollider2D Bc2d;
     public Rigidbody2D Rb2d;
     public int Health;
     public float Speed;
@@ -14,6 +15,10 @@ public class EnemyController : MonoBehaviour
     public float DamageTimeMax;
     public float DeathTime;
 
+    public AudioClip LifeLostSound;
+    public AudioClip HitSound;
+    public AudioClip DeathSound;
+
 
     private float startSpeed;
     private GameManager gM;
@@ -22,7 +27,10 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Find the GameController object on the screen for score purposes
         gM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+
+        //Sets the enemy's speed, depending on what enemy it is
         startSpeed = Speed;
     }
 
@@ -30,7 +38,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         //Time events
-        if (Anim.GetBool("Dead") == true)
+        if (Anim.GetBool("Dead") == true) //Controls the delay between the death animation and being destroyed
         {
             Anim.SetBool("Moving", true);
             Speed = 0;
@@ -44,7 +52,7 @@ public class EnemyController : MonoBehaviour
             }
         } else
         {
-            if (damageTime > 0)
+            if (damageTime > 0) //Controls the delay between the stun animation and moving again, but only if the death animation is currently not playing
             {
                 Speed = 0;
                 Anim.SetBool("Moving", false);
@@ -60,32 +68,39 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Movement control
         Rb2d.velocity = new Vector2(-Speed, 0);
     }
 
 
-    public void OnTriggerEnter2D(Collider2D collision) //Collisions with bullets decrease health, and when health would equal 0, the enemy goes into death anim
+    public void OnTriggerEnter2D(Collider2D collision) //Collisions with bullets decrease health, and when health would equal 0, the enemy goes into the death animation
     {
-        if (collision.gameObject.tag == "Bullet") //Enemy is only affected by the bullet if they are not in i-frames
+        if (collision.gameObject.tag == "Bullet")
         {
             //Destroy(collision.gameObject);  Done in the bullet object
 
-            if (Health > 1)
+            if (Health > 1) //On collision with bullet, lose health (if not at 1 HP) or go through death processes (if at 1 HP)
             {
                 Health -= 1;
                 //Anim.SetBool("Moving", false);
                 damageTime = DamageTimeMax;
+                AudioSource.PlayClipAtPoint(HitSound, transform.position);
             }
             else
             {
                 gM.UpdateScore(); //Gives score through the GameManager
                 Anim.SetBool("Dead", true);
+                AudioSource.PlayClipAtPoint(DeathSound, transform.position);
+
+                Bc2d.enabled = false;
             }
         }
 
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Killzone")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Killzone") //Checks for collisions that would cause a life to be lost (player or back wall)
         {
             gM.UpdateLives();
+            AudioSource.PlayClipAtPoint(LifeLostSound, transform.position);
+
             Destroy(gameObject);
         }
     }

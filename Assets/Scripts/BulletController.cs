@@ -22,7 +22,7 @@ public class BulletController : MonoBehaviour
     }
 
 
-    public void OnTriggerEnter2D(Collider2D collision) //If a bullet collides with a wall-type object, the bullet is destroyed
+    public void OnTriggerEnter2D(Collider2D collision) //If a bullet collides with a collider object or enemy, the bullet is destroyed
     {
         if (collision.gameObject.tag == "Collider")
         {

@@ -3,7 +3,12 @@ guid: e285cc151223812459029e5a33beed88
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Rb2d: {instanceID: 0}
+  - Anim: {instanceID: 0}
+  - LifeLostSound: {fileID: 8300000, guid: 1efa6b8ba5f03a34cb906f36eb99fadc, type: 3}
+  - HitSound: {fileID: 8300000, guid: 110cdbb28516cf44dab04eac3c30612c, type: 3}
+  - DeathSound: {fileID: 8300000, guid: a9a2598f89ada684d8febd295c05add5, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

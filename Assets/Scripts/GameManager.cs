@@ -13,11 +13,17 @@ public class GameManager : MonoBehaviour
     public int Lives;
     public TMP_Text ScoreText;
     public TMP_Text LivesText;
+    public TMP_Text HighscoreText;
 
+    private int highscore;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Load highscore data
+        LoadData();
+        HighscoreText.text = "Highscore:\n" + highscore.ToString();
+
         //Setting up the input system
         PlayerInputInstance = GetComponent<PlayerInput>();
         PlayerInputInstance.currentActionMap.Enable();
@@ -49,8 +55,9 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLives()
     {
-        if (Lives == 1) //If lives equal 0 (has to be 1 because that's the final hit), reset the game. Otherwise, lose a life; displays it
+        if (Lives == 1) //If lives equal 0 (has to be 1 because that's the final hit), check score data and reset the game. Otherwise, lose a life; displays it.
         {
+            SaveData();
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
         else
@@ -58,6 +65,18 @@ public class GameManager : MonoBehaviour
             Lives -= 1;
             LivesText.text = "Lives:\n" + Lives.ToString();
         }
+    }
+
+    public void SaveData()
+    {
+        if (Score > highscore) //Overwrite previous highscore with current score
+        {
+            PlayerPrefs.SetInt("Highscore", Score);
+        }
+    }
+    public void LoadData()
+    {
+        highscore = PlayerPrefs.GetInt("Highscore"); //Loads the currently-saved highscore data into the variable
     }
 
 
